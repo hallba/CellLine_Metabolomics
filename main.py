@@ -211,4 +211,4 @@ def display_page(pathname):
 
 # Run the app on localhost:8050
 if __name__ == '__main__':
-    app.run_server(debug=True, host='0.0.0.0', port='80')
+    app.run_server(debug=True, host='0.0.0.0', port='8050') #80 for deployment; 8050 for development

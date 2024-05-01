@@ -59,8 +59,16 @@ def metaboname(metaboid, dataset = "shorthouse", headnumber =2):
 
 
 ## Generating name series for labels to use as default
-metabolite_series_shorthouse = pd.Series([metaboname(i, "shorthouse", 1) for i in shorthouse_data.index.tolist()], name = "metabolite")
-metabolite_series_cherkaoui = pd.Series([metaboname(i, "shorthouse", 1) for i in cherkaoui_data.index.tolist()], name = "metabolite")
+##BAH
+shorthouseIndex = shorthouse_data.index.tolist()
+shorthouseIndex.sort()
+metabolite_series_shorthouse = pd.Series([metaboname(i, "shorthouse", 1) for i in shorthouseIndex], name = "metabolite")
+metabolite_series_shorthouse.index += 1
+
+cherkaouiIndex = cherkaoui_data.index.tolist()
+cherkaouiIndex.sort()
+metabolite_series_cherkaoui = pd.Series([metaboname(i, "cherkaoui", 1) for i in cherkaouiIndex], name = "metabolite")
+metabolite_series_cherkaoui.index += 1
 ## Reading in differential expression metabolite data
 metabolite_diff_expr_shorthouse = pd.read_csv("./Data/Mutation_differential_expression_shorthouse.csv", index_col = "ionIdx")
 metabolite_diff_expr_cherkaoui = pd.read_csv("./Data/Mutation_differential_expression_cherkaoui.csv", index_col = "ionIdx")
@@ -285,8 +293,11 @@ def volcano_plot_per_mutation(mutation_name, dataset):
     mutation_tstat = tstat_sorted[mutation_name]
     diff_expr_mutation = diff_expr[mutation_name]
     mutation_tstat = abs(mutation_tstat)
+    #print(metabolite_series_names)
+    #print(mutation_tstat)
     plotting_frame = pd.concat([mutation_tstat, diff_expr_mutation, metabolite_series_names], axis=1)
     plotting_frame.columns = ["tstat", "diffexpr", "metabolite"]
+    #print(plotting_frame)
 
 # Generate color column
     plotting_frame["colour"] = np.where((plotting_frame["tstat"] >= 5) & (plotting_frame["diffexpr"] >0), "Highly Increased",
