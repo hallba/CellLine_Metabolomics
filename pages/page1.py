@@ -291,7 +291,7 @@ def volcano_plot_per_mutation(mutation_name, dataset):
     tstat_sorted = tstat_dataframe.sort_index()
 # get mutation of interest and merge frames
     mutation_tstat = tstat_sorted[mutation_name]
-    diff_expr_mutation = diff_expr[mutation_name]
+    diff_expr_mutation = diff_expr[mutation_name]*-1
     mutation_tstat = abs(mutation_tstat)
     #print(metabolite_series_names)
     #print(mutation_tstat)
